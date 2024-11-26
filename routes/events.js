@@ -68,7 +68,7 @@ router.put("/update/:id", isEventExists, async (req, res) => {
       capacity,
       id,
     ]);
-    res.status(201).json({ "Updated Event": updateEvent.rows });
+    res.status(201).json({ "Updated Event": updateEvent.rows[0] });
   } catch (error) {
     console.error("error updating event", error);
     res.status(500).json({ error: "server error" });
