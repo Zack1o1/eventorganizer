@@ -1,0 +1,23 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    role VARCHAR(50) DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,          -- Auto-incrementing event ID
+    user_id INTEGER NOT NULL,       -- Foreign key referencing the user who created the event
+    title VARCHAR(255) NOT NULL,    -- Event title
+    description TEXT,               -- Event description
+    location VARCHAR(255),          -- Event location
+    event_date TIMESTAMP NOT NULL,  -- Event date and time
+    capacity INTEGER,               -- Maximum capacity for the event
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Time when the event was created
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP   -- Time when the event was last updated
+);
+
+-- Add a foreign key constraint to link the event to the user who created it
+ALTER TABLE events ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE;
