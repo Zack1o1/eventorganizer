@@ -4,6 +4,7 @@ import authRoutes from './routes/auth.js';
 import verifyToken from './middleware/verifyToken.js';
 import eventsRoutes from './routes/events.js';
 import logger from './middleware/methodlogger.js';
+import cors from 'cors'
 
 configDotenv();
 
@@ -13,6 +14,8 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(logger); 
 app.use(express.json());
+
+app.use(cors({ origin: "*", credentials: true }));
 
 // Base URI
 app.get('/', (req, res) => {
