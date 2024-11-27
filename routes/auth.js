@@ -52,7 +52,12 @@ router.post('/login', async (req, res)=>{
         }
         //jwt token
         const token = jwt.sign({id: user.rows[0].id,email: user.rows[0].email}, JWT_SECRET, {expiresIn:'24h'})
-    
+        res.cookie('token', token, {
+          httpOnly: true,  // Can't be accessed by JavaScript
+          secure: process.env.NODE_ENV === 'production' ? true : false,  // Set to true in production
+          sameSite: 'strict',  // Prevents CSRF
+          maxAge: 24 * 60 * 60 * 1000, // 1 day
+        });
         res.status(200).json({message:'login successful', token})
 
     } catch (error) {

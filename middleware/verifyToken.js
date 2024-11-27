@@ -7,6 +7,7 @@ configDotenv()
 const verifyToken = (req, res, next) => {
   // Get the token from the header
   const token = req.header('Authorization')?.replace('Bearer ', '');
+
   if (!token) {
     return res.status(401).json({ error: 'No token provided' });
   }
